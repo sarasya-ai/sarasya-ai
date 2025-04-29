@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head><title>Upload Chip Design</title></head>
+<body>
+    <h2>Upload your chip file</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="chipfile">
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
