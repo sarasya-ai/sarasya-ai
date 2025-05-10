@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
+from .views import optimize_chip
 
 urlpatterns = [
-    path('', views.upload_view, name='upload'),
+    path('', optimize_chip, name='optimize'),
 ]
-

@@ -1,32 +1,15 @@
-<!-- <!DOCTYPE html>
-<html>
-<head><title>Upload Chip Design</title></head>
-<body>
-    <h2>Upload your chip file</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="chipfile">
-        <button type="submit">Upload</button>
-    </form>
-</body>
-</html> -->
+<h2>Chip Design Input</h2>
+<form method="post">
+    {% csrf_token %}
+    Performance Level:
+    <select name="performance">
+        <option value="Low">Low</option>
+        <option value="Balanced">Balanced</option>
+        <option value="High">High</option>
+    </select><br><br>
 
-<h2>Sarasya AI - Chip Generator</h2>
-<form method="post" action="/result/">
-  {% csrf_token %}
-  <label>Use Case:</label>
-  <select name="use_case">
-    <option>IoT</option><option>AI</option><option>Mobile</option>
-  </select><br>
-  <label>Performance:</label>
-  <select name="performance">
-    <option>Low</option><option>Balanced</option><option>High</option>
-  </select><br>
-  <label>Power (mW):</label><input type="number" name="power"><br>
-  <label>Area (mm²):</label><input type="number" name="area"><br>
-  <label>Fabrication Node:</label>
-  <select name="node">
-    <option>180nm</option><option>65nm</option><option>7nm</option>
-  </select><br>
-  <button type="submit">Generate</button>
+    Max Power (mW): <input type="number" name="power"><br><br>
+    Max Area (mm²): <input type="number" name="area"><br><br>
+
+    <input type="submit" value="Optimize">
 </form>

@@ -1,31 +1,61 @@
-# from django.shortcuts import render
-
-# def upload_view(request):
-#     return render(request, 'upload.html')
 from django.shortcuts import render
 
-def home(request):
-    return render(request, 'upload.html')
+# Sample component library
+components = {
+    "cores": [
+        {"name": "RISC-V Low Power", "performance": "Low", "power": 10, "area": 5},
+        {"name": "RISC-V High Perf", "performance": "High", "power": 100, "area": 20},
+        {"name": "ARM Cortex-A53", "performance": "Balanced", "power": 70, "area": 15},
+    ],
+    "memory": [
+        {"name": "256KB SRAM", "power": 20, "area": 10},
+        {"name": "1MB SRAM", "power": 40, "area": 20},
+    ],
+    "connectivity": [
+        {"name": "WiFi", "power": 30, "area": 8},
+        {"name": "BLE", "power": 10, "area": 3},
+    ]
+}
 
-def result(request):
-    if request.method == 'POST':
-        use_case = request.POST['use_case']
-        performance = request.POST['performance']
-        power = request.POST['power']
-        area = request.POST['area']
-        node = request.POST['node']
+def optimize_chip(request):
+    if request.method == "POST":
+        perf = request.POST.get("performance")
+        max_power = int(request.POST.get("power"))
+        max_area = int(request.POST.get("area"))
 
-        # Dummy logic
-        output = {
-            "core": "RISC-V (Low Power)",
-            "memory": "512KB SRAM",
-            "connectivity": "BLE",
-            "ppa": {
-                "power": f"{power}mW estimated",
-                "area": f"{area}mm² estimated",
-                "performance": performance
-            }
-        }
-        return render(request, 'result.html', {'output': output})
+        selected = {"core": None, "memory": None, "connectivity": None}
+        total_power = 0
+        total_area = 0
 
-    return render(request, 'upload.html')
+        # Pick core
+        for core in components["cores"]:
+            if core["performance"] == perf:
+                if core["power"] <= max_power and core["area"] <= max_area:
+                    selected["core"] = core
+                    total_power += core["power"]
+                    total_area += core["area"]
+                    break
+
+        # Memory
+        for mem in components["memory"]:
+            if total_power + mem["power"] <= max_power and total_area + mem["area"] <= max_area:
+                selected["memory"] = mem
+                total_power += mem["power"]
+                total_area += mem["area"]
+                break
+
+        # Connectivity
+        for con in components["connectivity"]:
+            if total_power + con["power"] <= max_power and total_area + con["area"] <= max_area:
+                selected["connectivity"] = con
+                total_power += con["power"]
+                total_area += con["area"]
+                break
+
+        return render(request, "results.html", {
+            "selection": selected,
+            "power": total_power,
+            "area": total_area
+        })
+    
+    return render(request, "upload.html")
