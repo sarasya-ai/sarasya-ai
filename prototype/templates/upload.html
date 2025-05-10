@@ -1,15 +1,26 @@
-<h2>Chip Design Input</h2>
-<form method="post">
-    {% csrf_token %}
-    Performance Level:
-    <select name="performance">
-        <option value="Low">Low</option>
-        <option value="Balanced">Balanced</option>
-        <option value="High">High</option>
-    </select><br><br>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chip Optimization</title>
+</head>
+<body>
+    <h1>Chip Design Input</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="performance">Performance Level:</label>
+        <select name="performance" required>
+            <option value="Low">Low</option>
+            <option value="Balanced">Balanced</option>
+            <option value="High">High</option>
+        </select><br><br>
 
-    Max Power (mW): <input type="number" name="power"><br><br>
-    Max Area (mm²): <input type="number" name="area"><br><br>
+        <label for="max_power">Max Power:</label>
+        <input type="number" name="max_power" required><br><br>
 
-    <input type="submit" value="Optimize">
-</form>
+        <label for="max_area">Max Area:</label>
+        <input type="number" name="max_area" required><br><br>
+
+        <button type="submit">Optimize</button>
+    </form>
+</body>
+</html>

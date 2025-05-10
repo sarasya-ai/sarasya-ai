@@ -1,11 +1,27 @@
-<h2>Optimized Chip Configuration</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chip Design Result</title>
+</head>
+<body>
+    <h1>Optimized Chip Configuration</h1>
 
-{% if selection.core %}
-    <p><strong>Core:</strong> {{ selection.core.name }}</p>
-    <p><strong>Memory:</strong> {{ selection.memory.name }}</p>
-    <p><strong>Connectivity:</strong> {{ selection.connectivity.name }}</p>
-    <p><strong>Total Power:</strong> {{ power }} mW</p>
-    <p><strong>Total Area:</strong> {{ area }} mm²</p>
-{% else %}
-    <p>No configuration found under given constraints.</p>
-{% endif %}
+    {% if error %}
+        <p style="color: red;">Error: {{ error }}</p>
+    {% elif result %}
+        <ul>
+            <li><strong>Performance:</strong> {{ result.performance }}</li>
+            <li><strong>Core:</strong> {{ result.core }}</li>
+            <li><strong>Memory:</strong> {{ result.memory }}</li>
+            <li><strong>Connectivity:</strong> {{ result.connectivity }}</li>
+            <li><strong>Total Power:</strong> {{ result.total_power }}</li>
+            <li><strong>Total Area:</strong> {{ result.total_area }}</li>
+
+        </ul>
+    {% else %}
+        <p>No configuration found under given constraints.</p>
+    {% endif %}
+
+    <a href="/">← Go back</a>
+</body>
+</html>
